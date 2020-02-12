@@ -83,8 +83,8 @@ arg_dict = dict(args.__dict__)
 if "resources" in job_properties:
     resources = job_properties["resources"]
     if arg_dict["time"] is None:
-        if "runtime" in resources:
-            arg_dict["time"] = resources["runtime"]
+        if "time_min" in resources:
+            arg_dict["time"] = resources["time_min"]
         elif "walltime" in resources:
             arg_dict["time"] = resources["walltime"]
     if arg_dict["mem"] is None:
@@ -96,7 +96,7 @@ if "resources" in job_properties:
 
 # Threads
 if "threads" in job_properties:
-    arg_dict["ntasks"] = job_properties["threads"]
+    arg_dict["cpus_per_task"] = job_properties["threads"]
 
 opt_keys = ["array", "account", "begin", "cpus_per_task",
             "dependency", "workdir", "error", "job_name", "mail_type",

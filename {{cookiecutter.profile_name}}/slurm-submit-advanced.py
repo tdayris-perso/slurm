@@ -199,8 +199,8 @@ if arg_dict["error"] is not None:
 if "resources" in job_properties:
     resources = job_properties["resources"]
     if arg_dict["time"] is None:
-        if "runtime" in resources:
-            arg_dict["time"] = resources["runtime"]
+        if "time_min" in resources:
+            arg_dict["time"] = resources["time_min"]
         elif "walltime" in resources:
             arg_dict["time"] = resources["walltime"]
     if arg_dict["mem"] is None:
@@ -286,4 +286,3 @@ try:
 except Exception as e:
     print(e)
     raise
-
