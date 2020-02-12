@@ -85,13 +85,18 @@ if "resources" in job_properties:
     if arg_dict["time"] is None:
         if "time_min" in resources:
             arg_dict["time"] = resources["time_min"]
-        elif "walltime" in resources:
-            arg_dict["time"] = resources["walltime"]
     if arg_dict["mem"] is None:
-        if "mem" in resources:
-            arg_dict["mem"] = resources["mem"]
-        elif "mem_mb" in resources:
+        if "mem_mb" in resources:
             arg_dict["mem"] = resources["mem_mb"]
+    if arg_dict["partition"] is None:
+        if arg_dict["time"] < 120:
+            arg_dict["partition"] = "shortq"
+        elif 120 <= arg_dict["time"] < 1440:
+            arg_dict["partition"] = "mediumq"
+        elif 1440 <= arg_dict["time"] < 10080:
+            arg_dict["partition"] = "mediumq"
+        elif 10080 <= arg_dict["time"] < 86400:
+            arg_dict["partition"] = "mediumq"
 
 
 # Threads
@@ -103,20 +108,23 @@ opt_keys = ["array", "account", "begin", "cpus_per_task",
             "mail_user", "ntasks", "nodes", "output", "partition",
             "quiet", "time", "wrap", "constraint", "mem"]
 
+# Partition is set according to mem and time.
 # Set default partition
-if arg_dict["partition"] is None:
-    if not "{{cookiecutter.partition}}":
-        # partitions and SLURM - If not specified, the default behavior is to
-        # allow the slurm controller to select the default partition as
-        # designated by the system administrator.
-        opt_keys.remove("partition")
-    else:
-        arg_dict["partition"] = "{{cookiecutter.partition}}"
+# if arg_dict["partition"] is None:
+#     if not "{{cookiecutter.partition}}":
+#         # partitions and SLURM - If not specified, the default behavior is to
+#         # allow the slurm controller to select the default partition as
+#         # designated by the system administrator.
+#         opt_keys.remove("partition")
+#     else:
+#         arg_dict["partition"] = "{{cookiecutter.partition}}"
 
+
+# No account needed once logged in
 # Set default account
-if arg_dict["account"] is None:
-    if "{{cookiecutter.account}}" != "":
-        arg_dict["account"] = "{{cookiecutter.account}}"
+# if arg_dict["account"] is None:
+#     if "{{cookiecutter.account}}" != "":
+#         arg_dict["account"] = "{{cookiecutter.account}}"
 
 # Ensure output folder for Slurm log files exist.
 # This is a bit hacky; will run for every Slurm submission...
