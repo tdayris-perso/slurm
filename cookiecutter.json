@@ -1,8 +1,3 @@
 {
-    "account": "",
-    "error": "slurm_error",
-    "output": "slurm_output",
-    "partition": "shortq",
     "profile_name": "slurm",
-    "submit_script": ["slurm-submit.py", "slurm-submit-advanced.py"]
 }

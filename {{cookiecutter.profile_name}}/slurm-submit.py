@@ -31,9 +31,6 @@ slurm_parser.add_argument(
 slurm_parser.add_argument(
     "-D", "--workdir", help="set working directory for batch script")
 slurm_parser.add_argument(
-    "-e", "--error", help="file for batch script's standard error",
-    default="{{cookiecutter.error}}" if "{{cookiecutter.error}}" else None)
-slurm_parser.add_argument(
     "-J", "--job-name", help="name of job")
 slurm_parser.add_argument(
     "--mail-type", help="notify on state change: BEGIN, END, FAIL or ALL")
@@ -43,9 +40,6 @@ slurm_parser.add_argument(
     "-n", "--ntasks", help="number of tasks to run")
 slurm_parser.add_argument(
     "-N", "--nodes", help="number of nodes on which to run (N = min[-max])")
-slurm_parser.add_argument(
-    "-o", "--output", help="file for batch script's standard output",
-    default="{{cookiecutter.output}}" if "{{cookiecutter.output}}" else None)
 slurm_parser.add_argument(
     "-p", "--partition", help="partition requested")
 slurm_parser.add_argument(
@@ -85,9 +79,13 @@ if "resources" in job_properties:
     if arg_dict["time"] is None:
         if "time_min" in resources:
             arg_dict["time"] = resources["time_min"]
+        else:
+            arg_dict["time"] = 30
     if arg_dict["mem"] is None:
         if "mem_mb" in resources:
             arg_dict["mem"] = resources["mem_mb"]
+        else:
+            arg_dict["mem"] = 1024
     if arg_dict["partition"] is None:
         if arg_dict["time"] < 120:
             arg_dict["partition"] = "shortq"
@@ -97,6 +95,10 @@ if "resources" in job_properties:
             arg_dict["partition"] = "mediumq"
         elif 10080 <= arg_dict["time"] < 86400:
             arg_dict["partition"] = "mediumq"
+        else:
+            raise ValueError(
+                "Too much time requested: {}".format(str(arg_dict["time"]))
+            )
 
 
 # Threads
@@ -107,32 +109,6 @@ opt_keys = ["array", "account", "begin", "cpus_per_task",
             "dependency", "workdir", "error", "job_name", "mail_type",
             "mail_user", "ntasks", "nodes", "output", "partition",
             "quiet", "time", "wrap", "constraint", "mem"]
-
-# Partition is set according to mem and time.
-# Set default partition
-# if arg_dict["partition"] is None:
-#     if not "{{cookiecutter.partition}}":
-#         # partitions and SLURM - If not specified, the default behavior is to
-#         # allow the slurm controller to select the default partition as
-#         # designated by the system administrator.
-#         opt_keys.remove("partition")
-#     else:
-#         arg_dict["partition"] = "{{cookiecutter.partition}}"
-
-
-# No account needed once logged in
-# Set default account
-# if arg_dict["account"] is None:
-#     if "{{cookiecutter.account}}" != "":
-#         arg_dict["account"] = "{{cookiecutter.account}}"
-
-# Does not work ...
-# Ensure output folder for Slurm log files exist.
-# This is a bit hacky; will run for every Slurm submission...
-# if arg_dict["output"] is not None:
-#     os.makedirs(os.path.dirname(arg_dict["output"]), exist_ok=True)
-# if arg_dict["error"] is not None:
-#     os.makedirs(os.path.dirname(arg_dict["error"]), exist_ok=True)
 
 opts = ""
 for k, v in arg_dict.items():
