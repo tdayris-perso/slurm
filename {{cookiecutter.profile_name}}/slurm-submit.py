@@ -126,12 +126,13 @@ opt_keys = ["array", "account", "begin", "cpus_per_task",
 #     if "{{cookiecutter.account}}" != "":
 #         arg_dict["account"] = "{{cookiecutter.account}}"
 
+# Does not work ...
 # Ensure output folder for Slurm log files exist.
 # This is a bit hacky; will run for every Slurm submission...
-if arg_dict["output"] is not None:
-    os.makedirs(os.path.dirname(arg_dict["output"]), exist_ok=True)
-if arg_dict["error"] is not None:
-    os.makedirs(os.path.dirname(arg_dict["error"]), exist_ok=True)
+# if arg_dict["output"] is not None:
+#     os.makedirs(os.path.dirname(arg_dict["output"]), exist_ok=True)
+# if arg_dict["error"] is not None:
+#     os.makedirs(os.path.dirname(arg_dict["error"]), exist_ok=True)
 
 opts = ""
 for k, v in arg_dict.items():
