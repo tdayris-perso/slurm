@@ -110,6 +110,16 @@ opt_keys = ["array", "account", "begin", "cpus_per_task",
             "mail_user", "ntasks", "nodes", "output", "partition",
             "quiet", "time", "wrap", "constraint", "mem"]
 
+arg_dict["output"] = "logs/slurm/slurm-%x-%j-%N.out"
+if arg_dict["output"] is not None:
+    os.makedirs(os.path.dirname(arg_dict["output"]), exist_ok=True)
+arg_dict["error"] = "logs/slurm/slurm-%x-%j-%N.err"
+if arg_dict["error"] is not None:
+    os.makedirs(os.path.dirname(arg_dict["error"]), exist_ok=True)
+
+arg_dict["mail_type"] = "END,FAIL"
+arg_dict["mail_user"] = "{{cookiecutter.mail_user}}"
+
 opts = ""
 for k, v in arg_dict.items():
     if k not in opt_keys:
