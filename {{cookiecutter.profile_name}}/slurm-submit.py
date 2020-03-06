@@ -92,9 +92,9 @@ if "resources" in job_properties:
         elif 120 <= arg_dict["time"] < 1440:
             arg_dict["partition"] = "mediumq"
         elif 1440 <= arg_dict["time"] < 10080:
-            arg_dict["partition"] = "mediumq"
+            arg_dict["partition"] = "longq"
         elif 10080 <= arg_dict["time"] < 86400:
-            arg_dict["partition"] = "mediumq"
+            arg_dict["partition"] = "verylongq"
         else:
             raise ValueError(
                 "Too much time requested: {}".format(str(arg_dict["time"]))
