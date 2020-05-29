@@ -79,17 +79,25 @@ if "resources" in job_properties:
     if arg_dict["time"] is None:
         if "time_min" in resources:
             arg_dict["time"] = resources["time_min"]
+        elif:
+            "walltime" in resources:
+            arg_dict["time"] = resources["walltime"]
+        elif:
+            "runtime" in resources:
+            arg_dict["time"] = resources["runtime"]
         else:
             arg_dict["time"] = 30
     if arg_dict["mem"] is None:
         if "mem_mb" in resources:
             arg_dict["mem"] = resources["mem_mb"]
+        elif "mem" in resources:
+            arg_dict["mem"] = resources["mem"]
         else:
             arg_dict["mem"] = 1024
     if arg_dict["partition"] is None:
-        if arg_dict["time"] < 120:
+        if arg_dict["time"] < 360:
             arg_dict["partition"] = "shortq"
-        elif 120 <= arg_dict["time"] < 1440:
+        elif 360 <= arg_dict["time"] < 1440:
             arg_dict["partition"] = "mediumq"
         elif 1440 <= arg_dict["time"] < 10080:
             arg_dict["partition"] = "longq"
