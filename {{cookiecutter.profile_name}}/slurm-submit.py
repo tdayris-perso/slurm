@@ -79,11 +79,9 @@ if "resources" in job_properties:
     if arg_dict["time"] is None:
         if "time_min" in resources:
             arg_dict["time"] = resources["time_min"]
-        elif:
-            "walltime" in resources:
+        elif "walltime" in resources:
             arg_dict["time"] = resources["walltime"]
-        elif:
-            "runtime" in resources:
+        elif "runtime" in resources:
             arg_dict["time"] = resources["runtime"]
         else:
             arg_dict["time"] = 30
