@@ -35,8 +35,8 @@ the requested number of tasks times memory per cpu unit.
 
 The following resources are supported by on a per-rule basis:
 
-- **mem**, **mem_mb**: set the memory resource request in mb.
-- **walltime**, **runtime**: set the time resource in min.
+-   **mem**, **mem_mb**: set the memory resource request in mb.
+-   **walltime**, **runtime**, **time_min**: set the time resource in min.
 
 ### Cluster configuration file
 
@@ -51,13 +51,13 @@ parameters.
 As an example, you can specify constraints in the cluster
 configuration file:
 
-```yaml
-__default__:
-  constraint: mem500MB
-  
-large_memory_requirement_job:
-  constraint: mem2000MB
-```
+
+		__default__:
+		  constraint: mem500MB
+
+		large_memory_requirement_job:
+		  constraint: mem2000MB
+
 
 
 ## Tests
@@ -67,8 +67,8 @@ that the user has installed docker and enabled [docker
 swarm](https://docs.docker.com/engine/swarm/), the SLURM tests will
 download two images:
 
-1. [quay.io/biocontainers/snakemake](https://quay.io/repository/biocontainers/snakemake?tab=tags)
-2. [giovtorres/docker-centos7-slurm](https://github.com/giovtorres/docker-centos7-slurm)
+1.  [quay.io/biocontainers/snakemake](https://quay.io/repository/biocontainers/snakemake?tab=tags)
+2.  [giovtorres/docker-centos7-slurm](https://github.com/giovtorres/docker-centos7-slurm)
 
 In addition, testing of the cookiecutter template itself is enabled
 through the [pytest plugin for
@@ -76,27 +76,3 @@ Cookiecutters](https://github.com/hackebrot/pytest-cookies). You can
 run the tests by issuing
 
 	pytest -v -s
-
-
-## ChangeLog
-
-### 2019-09-03
-
-- add qos option
-
-### 2019-08-21
-
-- replace pytest_namespace with pytest_configure
-- make days optional (#18)
-
-### 2018-10-18
-
-- add cookiecutter options to set sbatch output and error defaults
-
-### 2018-10-09
-
-- add support for mem_mb in resources
-- add support for cluster configuration file
-- add advanced slurm-submit file
-- adjust resource requirements if they exceed partition configuration
-  settings (#11)
