@@ -11,3 +11,6 @@ reason: true
 printshellcmds: true
 jobname: "{name}.{jobid}.snakejob.sh"
 use-conda: true
+conda-prefix: /mnt/beegfs/userdata/{{cookiecutter.user_name}}/snakemake/conda
+singularity-prefix: /mnt/beegfs/userdata/{{cookiecutter.user_name}}/snakemake/singularity
+wrapper-prefix: https://raw.githubusercontent.com/tdayris/snakemake-wrappers/Unofficial
