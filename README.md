@@ -12,7 +12,7 @@ To deploy this profile, run
 
 	mkdir -p ~/.config/snakemake
 	cd ~/.config/snakemake
-	cookiecutter https://github.com/Snakemake-Profiles/slurm.git
+	cookiecutter https://github.com/tdayris-perso/slurm.git
 
 Then, you can run Snakemake with
 
