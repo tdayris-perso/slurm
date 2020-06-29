@@ -1,5 +1,3 @@
-[![CircleCI](https://circleci.com/gh/percyfal/slurm.svg?style=svg)](https://circleci.com/gh/percyfal/slurm)
-
 # slurm
 
 This profile configures Snakemake to run on the [SLURM Workload Manager](https://slurm.schedmd.com/)
